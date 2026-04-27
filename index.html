@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empire OS — AI Financial Intelligence for Emerging Markets</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #060606;
+  --gold: #c9a84c;
+  --gold2: #e8c870;
+  --gold3: #f5e0a0;
+  --white: #f0ede8;
+  --muted: #5a5650;
+  --border: #1a1814;
+  --card: #0e0c0a;
+  --green: #00d97e;
+  --red: #ff4444;
+}
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+background: var(–black);
+color: var(–white);
+font-family: ‘Cormorant Garamond’, serif;
+overflow-x: hidden;
+cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+width: 8px; height: 8px;
+background: var(–gold);
+border-radius: 50%;
+position: fixed;
+pointer-events: none;
+z-index: 9999;
+transition: transform 0.1s;
+mix-blend-mode: difference;
+}
+.cursor-ring {
+width: 32px; height: 32px;
+border: 1px solid rgba(201,168,76,0.4);
+border-radius: 50%;
+position: fixed;
+pointer-events: none;
+z-index: 9998;
+transition: all 0.15s ease;
+}
+
+/* NOISE OVERLAY */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 1000;
+opacity: 0.6;
+}
+
+/* GOLD GRADIENT LINE */
+.gold-line {
+width: 100%;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–gold), transparent);
+opacity: 0.3;
+}
+
+/* ─── HERO ─────────────────────────────────────── */
+.hero {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+padding: 0 6vw;
+position: relative;
+overflow: hidden;
+}
+
+.hero-grid {
+position: absolute;
+inset: 0;
+background-image:
+linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+background-size: 60px 60px;
+}
+
+.hero-glow {
+position: absolute;
+top: -20%;
+right: -10%;
+width: 600px;
+height: 600px;
+background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+pointer-events: none;
+}
+
+.hero-glow2 {
+position: absolute;
+bottom: -20%;
+left: -10%;
+width: 400px;
+height: 400px;
+background: radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%);
+pointer-events: none;
+}
+
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+padding: 20px 6vw;
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: linear-gradient(180deg, rgba(6,6,6,0.95) 0%, transparent 100%);
+backdrop-filter: blur(10px);
+}
+
+.nav-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+letter-spacing: 4px;
+color: var(–gold);
+}
+
+.nav-links {
+display: flex;
+gap: 32px;
+list-style: none;
+}
+
+.nav-links a {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+letter-spacing: 2px;
+color: var(–muted);
+text-decoration: none;
+text-transform: uppercase;
+transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(–gold); }
+
+.nav-cta {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+letter-spacing: 2px;
+padding: 10px 20px;
+border: 1px solid var(–gold);
+color: var(–gold);
+text-decoration: none;
+text-transform: uppercase;
+transition: all 0.2s;
+}
+
+.nav-cta:hover {
+background: var(–gold);
+color: var(–black);
+}
+
+.hero-content {
+position: relative;
+z-index: 2;
+max-width: 900px;
+}
+
+.hero-tag {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+letter-spacing: 4px;
+color: var(–gold);
+text-transform: uppercase;
+margin-bottom: 24px;
+display: flex;
+align-items: center;
+gap: 12px;
+opacity: 0;
+animation: fadeUp 0.8s forwards 0.2s;
+}
+
+.hero-tag::before {
+content: ‘’;
+width: 40px;
+height: 1px;
+background: var(–gold);
+}
+
+.hero-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(64px, 10vw, 140px);
+line-height: 0.9;
+letter-spacing: 2px;
+color: var(–white);
+margin-bottom: 8px;
+opacity: 0;
+animation: fadeUp 0.8s forwards 0.4s;
+}
+
+.hero-title span {
+color: var(–gold);
+display: block;
+}
+
+.hero-subtitle {
+font-size: clamp(18px, 2.5vw, 28px);
+font-weight: 300;
+font-style: italic;
+color: var(–muted);
+margin-bottom: 40px;
+line-height: 1.4;
+max-width: 600px;
+opacity: 0;
+animation: fadeUp 0.8s forwards 0.6s;
+}
+
+.hero-actions {
+display: flex;
+gap: 16px;
+flex-wrap: wrap;
+opacity: 0;
+animation: fadeUp 0.8s forwards 0.8s;
+}
+
+.btn-primary {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 18px;
+letter-spacing: 3px;
+padding: 16px 40px;
+background: var(–gold);
+color: var(–black);
+text-decoration: none;
+transition: all 0.2s;
+position: relative;
+overflow: hidden;
+}
+
+.btn-primary::after {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: var(–gold2);
+transform: translateX(-100%);
+transition: transform 0.3s;
+}
+
+.btn-primary:hover::after { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+
+.btn-secondary {
+font-family: ‘Space Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+padding: 16px 32px;
+border: 1px solid rgba(201,168,76,0.3);
+color: var(–white);
+text-decoration: none;
+text-transform: uppercase;
+transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+border-color: var(–gold);
+color: var(–gold);
+}
+
+/* LIVE TICKER */
+.hero-ticker {
+position: absolute;
+bottom: 40px;
+left: 0; right: 0;
+overflow: hidden;
+opacity: 0;
+animation: fadeUp 0.8s forwards 1s;
+}
+
+.ticker-track {
+display: flex;
+gap: 48px;
+animation: ticker 25s linear infinite;
+white-space: nowrap;
+padding: 12px 0;
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+}
+
+@keyframes ticker {
+0% { transform: translateX(0); }
+100% { transform: translateX(-50%); }
+}
+
+.tick-item {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+display: flex;
+gap: 8px;
+align-items: center;
+}
+
+.tick-sym { color: var(–gold); }
+.tick-val { color: var(–white); }
+.tick-up { color: var(–green); }
+.tick-dn { color: var(–red); }
+
+/* ─── STATS BAR ────────────────────────────────── */
+.stats-bar {
+padding: 60px 6vw;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 1px;
+background: var(–border);
+}
+
+@media (max-width: 768px) {
+.stats-bar { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat-item {
+background: var(–black);
+padding: 40px 32px;
+text-align: center;
+}
+
+.stat-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 52px;
+color: var(–gold);
+line-height: 1;
+margin-bottom: 8px;
+}
+
+.stat-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–muted);
+text-transform: uppercase;
+}
+
+/* ─── FEATURES ─────────────────────────────────── */
+.section {
+padding: 100px 6vw;
+}
+
+.section-header {
+margin-bottom: 64px;
+}
+
+.section-tag {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+letter-spacing: 3px;
+color: var(–gold);
+text-transform: uppercase;
+margin-bottom: 16px;
+}
+
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(36px, 5vw, 72px);
+line-height: 1;
+letter-spacing: 1px;
+}
+
+.section-title em {
+font-family: ‘Cormorant Garamond’, serif;
+font-style: italic;
+color: var(–gold);
+font-size: 0.8em;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(–border);
+}
+
+@media (max-width: 768px) {
+.features-grid { grid-template-columns: 1fr; }
+}
+
+.feature-card {
+background: var(–card);
+padding: 48px 36px;
+position: relative;
+overflow: hidden;
+transition: background 0.3s;
+}
+
+.feature-card:hover { background: #121008; }
+
+.feature-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 2px;
+background: linear-gradient(90deg, var(–gold), transparent);
+transform: scaleX(0);
+transform-origin: left;
+transition: transform 0.4s;
+}
+
+.feature-card:hover::before { transform: scaleX(1); }
+
+.feature-icon {
+font-size: 28px;
+margin-bottom: 20px;
+}
+
+.feature-num {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 64px;
+color: rgba(201,168,76,0.08);
+position: absolute;
+top: 16px;
+right: 24px;
+line-height: 1;
+}
+
+.feature-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 22px;
+letter-spacing: 1px;
+color: var(–white);
+margin-bottom: 12px;
+}
+
+.feature-desc {
+font-size: 15px;
+font-weight: 300;
+line-height: 1.7;
+color: var(–muted);
+}
+
+/* ─── DEMO SECTION ─────────────────────────────── */
+.demo-section {
+padding: 100px 6vw;
+background: var(–card);
+position: relative;
+overflow: hidden;
+}
+
+.demo-section::before {
+content: ‘’;
+position: absolute;
+top: -100px; right: -100px;
+width: 400px; height: 400px;
+background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.demo-layout {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 80px;
+align-items: center;
+}
+
+@media (max-width: 768px) {
+.demo-layout { grid-template-columns: 1fr; gap: 40px; }
+}
+
+.demo-screen {
+border: 1px solid var(–border);
+background: var(–black);
+padding: 24px;
+position: relative;
+}
+
+.demo-screen::before {
+content: ‘EMPIRE OS V2.0’;
+position: absolute;
+top: -1px; left: 24px;
+background: var(–gold);
+color: var(–black);
+font-family: ‘Space Mono’, monospace;
+font-size: 9px;
+letter-spacing: 2px;
+padding: 4px 12px;
+}
+
+.demo-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 12px 0;
+border-bottom: 1px solid var(–border);
+font-family: ‘Space Mono’, monospace;
+font-size: 11px;
+}
+
+.demo-row:last-child { border-bottom: none; }
+.demo-key { color: var(–muted); }
+.demo-val { color: var(–white); }
+.demo-val.up { color: var(–green); }
+.demo-val.dn { color: var(–red); }
+.demo-val.gold { color: var(–gold); }
+
+.signal-box {
+margin-top: 20px;
+padding: 16px;
+border: 1px solid rgba(0,217,126,0.2);
+background: rgba(0,217,126,0.04);
+text-align: center;
+}
+
+.signal-label {
+font-family: ‘Space Mono’, monospace;
+font-size: 9px;
+color: var(–muted);
+letter-spacing: 2px;
+margin-bottom: 4px;
+}
+
+.signal-val {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 36px;
+color: var(–green);
+letter-spacing: 3px;
+}
+
+.demo-text .section-tag { margin-bottom: 16px; }
+
+.demo-text p {
+font-size: 17px;
+font-weight: 300;
+line-height: 1.8;
+color: var(–muted);
+margin-bottom: 32px;
+}
+
+.demo-list {
+list-style: none;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.demo-list li {
+font-family: ‘Space Mono’, monospace;
+font-size: 11px;
+color: var(–white);
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.demo-list li::before {
+content: ‘→’;
+color: var(–gold);
+flex-shrink: 0;
+}
+
+/* ─── MARKETS ───────────────────────────────────── */
+.markets-section {
+padding: 100px 6vw;
+}
+
+.markets-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 1px;
+background: var(–border);
+margin-top: 48px;
+}
+
+@media (max-width: 768px) {
+.markets-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.market-card {
+background: var(–card);
+padding: 32px 28px;
+transition: background 0.2s;
+}
+
+.market-card:hover { background: #121008; }
+
+.market-cat {
+font-family: ‘Space Mono’, monospace;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–muted);
+text-transform: uppercase;
+margin-bottom: 8px;
+}
+
+.market-name {
+font-size: 14px;
+font-weight: 300;
+margin-bottom: 12px;
+color: var(–white);
+}
+
+.market-val {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 32px;
+color: var(–gold);
+letter-spacing: 1px;
+}
+
+.market-chg {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+margin-top: 4px;
+}
+
+.market-chg.up { color: var(–green); }
+.market-chg.dn { color: var(–red); }
+
+/* ─── TESTIMONIAL ──────────────────────────────── */
+.quote-section {
+padding: 100px 6vw;
+background: var(–card);
+text-align: center;
+position: relative;
+}
+
+.quote-mark {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 120px;
+color: rgba(201,168,76,0.1);
+line-height: 0.5;
+margin-bottom: 24px;
+}
+
+.quote-text {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(22px, 3vw, 36px);
+font-style: italic;
+font-weight: 300;
+line-height: 1.5;
+max-width: 800px;
+margin: 0 auto 32px;
+color: var(–white);
+}
+
+.quote-author {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+letter-spacing: 3px;
+color: var(–gold);
+text-transform: uppercase;
+}
+
+/* ─── CTA ──────────────────────────────────────── */
+.cta-section {
+padding: 120px 6vw;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.cta-section::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+.cta-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: clamp(48px, 8vw, 100px);
+line-height: 0.95;
+letter-spacing: 2px;
+margin-bottom: 24px;
+position: relative;
+}
+
+.cta-title span { color: var(–gold); display: block; }
+
+.cta-sub {
+font-size: 18px;
+font-weight: 300;
+font-style: italic;
+color: var(–muted);
+margin-bottom: 48px;
+position: relative;
+}
+
+.cta-actions {
+display: flex;
+gap: 16px;
+justify-content: center;
+flex-wrap: wrap;
+position: relative;
+}
+
+/* ─── FOOTER ───────────────────────────────────── */
+footer {
+padding: 40px 6vw;
+border-top: 1px solid var(–border);
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: wrap;
+gap: 16px;
+}
+
+.footer-logo {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 20px;
+letter-spacing: 4px;
+color: var(–gold);
+opacity: 0.5;
+}
+
+.footer-text {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+color: var(–muted);
+}
+
+.footer-links {
+display: flex;
+gap: 24px;
+list-style: none;
+}
+
+.footer-links a {
+font-family: ‘Space Mono’, monospace;
+font-size: 10px;
+color: var(–muted);
+text-decoration: none;
+letter-spacing: 1px;
+transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(–gold); }
+
+/* ─── ANIMATIONS ───────────────────────────────── */
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(24px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+opacity: 0;
+transform: translateY(32px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* SCAN LINE */
+.scanline {
+position: fixed;
+top: -2px; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+animation: scanline 8s linear infinite;
+pointer-events: none;
+z-index: 999;
+}
+
+@keyframes scanline {
+0% { top: -2px; }
+100% { top: 100vh; }
+}
+
+@media (max-width: 768px) {
+.nav-links { display: none; }
+.stats-bar { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="scanline"></div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-logo">EMPIRE OS</div>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#markets">Markets</a></li>
+    <li><a href="#demo">Intelligence</a></li>
+  </ul>
+  <a href="https://claude.ai/public/artifacts/60802aeb-ec05-4869-9890-474bfe993e66" target="_blank" class="nav-cta">Launch Radar →</a>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+
+  <div class="hero-content">
+    <div class="hero-tag">AI-Driven Financial Intelligence · Emerging Markets</div>
+    <h1 class="hero-title">
+      EMPIRE
+      <span>OS</span>
+    </h1>
+    <p class="hero-subtitle">
+      The sovereign intelligence engine for emerging market investors.<br>
+      Real-time analysis. Quantitative precision. Zero compromise.
+    </p>
+    <div class="hero-actions">
+      <a href="https://claude.ai/public/artifacts/60802aeb-ec05-4869-9890-474bfe993e66" target="_blank" class="btn-primary">
+        <span>Launch the Radar →</span>
+      </a>
+      <a href="#demo" class="btn-secondary">See How It Works</a>
+    </div>
+  </div>
+
+  <div class="hero-ticker">
+    <div class="ticker-track">
+      <div class="tick-item"><span class="tick-sym">USD/MAD</span><span class="tick-val">10.04</span><span class="tick-up">▲ +0.12%</span></div>
+      <div class="tick-item"><span class="tick-sym">BTC</span><span class="tick-val">$94,210</span><span class="tick-up">▲ +2.3%</span></div>
+      <div class="tick-item"><span class="tick-sym">MASI</span><span class="tick-val">13,842</span><span class="tick-up">▲ +0.44%</span></div>
+      <div class="tick-item"><span class="tick-sym">GOLD</span><span class="tick-val">$2,318</span><span class="tick-up">▲ +0.5%</span></div>
+      <div class="tick-item"><span class="tick-sym">EUR/MAD</span><span class="tick-val">11.21</span><span class="tick-dn">▼ -0.08%</span></div>
+      <div class="tick-item"><span class="tick-sym">BAM RATE</span><span class="tick-val">2.75%</span><span class="tick-val"> STABLE</span></div>
+      <div class="tick-item"><span class="tick-sym">ETH</span><span class="tick-val">$3,140</span><span class="tick-up">▲ +1.1%</span></div>
+      <div class="tick-item"><span class="tick-sym">OIL/WTI</span><span class="tick-val">$82.4</span><span class="tick-dn">▼ -0.9%</span></div>
+      <!-- duplicate for loop -->
+      <div class="tick-item"><span class="tick-sym">USD/MAD</span><span class="tick-val">10.04</span><span class="tick-up">▲ +0.12%</span></div>
+      <div class="tick-item"><span class="tick-sym">BTC</span><span class="tick-val">$94,210</span><span class="tick-up">▲ +2.3%</span></div>
+      <div class="tick-item"><span class="tick-sym">MASI</span><span class="tick-val">13,842</span><span class="tick-up">▲ +0.44%</span></div>
+      <div class="tick-item"><span class="tick-sym">GOLD</span><span class="tick-val">$2,318</span><span class="tick-up">▲ +0.5%</span></div>
+      <div class="tick-item"><span class="tick-sym">EUR/MAD</span><span class="tick-val">11.21</span><span class="tick-dn">▼ -0.08%</span></div>
+      <div class="tick-item"><span class="tick-sym">BAM RATE</span><span class="tick-val">2.75%</span><span class="tick-val"> STABLE</span></div>
+      <div class="tick-item"><span class="tick-sym">ETH</span><span class="tick-val">$3,140</span><span class="tick-up">▲ +1.1%</span></div>
+      <div class="tick-item"><span class="tick-sym">OIL/WTI</span><span class="tick-val">$82.4</span><span class="tick-dn">▼ -0.9%</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- STATS -->
+
+<div class="stats-bar reveal">
+  <div class="stat-item">
+    <div class="stat-num">8+</div>
+    <div class="stat-label">Asset Classes Monitored</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Real-Time Intelligence</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">V2</div>
+    <div class="stat-label">Sovereign Risk Engine</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Emerging Markets Coverage</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+
+<section class="section" id="features">
+  <div class="section-header reveal">
+    <div class="section-tag">Core Intelligence</div>
+    <h2 class="section-title">BUILT FOR <em>those who</em><br>CALCULATE, NOT HOPE</h2>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-num">01</div>
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Quantitative Rigor</div>
+      <p class="feature-desc">Cap Rates, NPV, Break-even analysis, and Yield Spreads. Every recommendation is backed by mathematics — never intuition alone.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">02</div>
+      <div class="feature-icon">🔗</div>
+      <div class="feature-title">Correlation Engine</div>
+      <p class="feature-desc">Understand how a BAM rate move impacts Sidi Maarouf real estate, MASI valuations, and your crypto exposure — simultaneously.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">03</div>
+      <div class="feature-icon">🦢</div>
+      <div class="feature-title">Black Swan Stress Tests</div>
+      <p class="feature-desc">What happens if USD/MAD hits 11.50? If MASI liquidity dries up? Empire OS stress-tests every opportunity before you commit.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">04</div>
+      <div class="feature-icon">⚖️</div>
+      <div class="feature-title">Legal Structure Optimizer</div>
+      <p class="feature-desc">SARL AU, Holding Company, UAE Free Zone — find the exact structure that minimizes your tax burden and maximizes returns legally.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">05</div>
+      <div class="feature-icon">🏙️</div>
+      <div class="feature-title">Casablanca Real Estate Radar</div>
+      <p class="feature-desc">District-by-district analysis of Sidi Maarouf, Anfa, Maarif, and Bouskoura — with live pricing, yield estimates, and opportunity scores.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-num">06</div>
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Strategic Signal</div>
+      <p class="feature-desc">Every analysis ends with a clear directive: BUY, HOLD, HEDGE, or AVOID. No ambiguity. No noise. Just signal.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- DEMO -->
+
+<section class="demo-section" id="demo">
+  <div class="demo-layout">
+    <div class="demo-screen reveal">
+      <div style="font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:2px;margin-bottom:20px;margin-top:16px;">LIVE INTELLIGENCE OUTPUT</div>
+
+```
+  <div class="demo-row">
+    <span class="demo-key">EXECUTIVE SUMMARY</span>
+  </div>
+  <div style="padding:12px 0;font-size:13px;color:var(--white);line-height:1.6;border-bottom:1px solid var(--border);">
+    Sidi Maarouf presents optimal risk-adjusted return on Casablanca — Cap Rate 7.2% vs city average 5.1%.
+  </div>
+
+  <div style="height:12px"></div>
+
+  <div class="demo-row">
+    <span class="demo-key">Cap Rate</span>
+    <span class="demo-val gold">7.2%</span>
+  </div>
+  <div class="demo-row">
+    <span class="demo-key">NPV (10 yr)</span>
+    <span class="demo-val up">+284,000 MAD</span>
+  </div>
+  <div class="demo-row">
+    <span class="demo-key">Break-even</span>
+    <span class="demo-val">8.2 years</span>
+  </div>
+  <div class="demo-row">
+    <span class="demo-key">Risk Score</span>
+    <span class="demo-val up">28 / 100</span>
+  </div>
+  <div class="demo-row">
+    <span class="demo-key">Black Swan</span>
+    <span class="demo-val dn">USD/MAD → 11.50</span>
+  </div>
+
+  <div class="signal-box">
+    <div class="signal-label">Strategic Signal</div>
+    <div class="signal-val">BUY</div>
+  </div>
+</div>
+
+<div class="demo-text reveal">
+  <div class="section-tag">How It Works</div>
+  <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,52px);letter-spacing:1px;margin-bottom:24px;line-height:1;">
+    ASK ANYTHING.<br>
+    <span style="color:var(--gold);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:0.75em;">Get institutional-grade answers.</span>
+  </h3>
+  <p>Empire OS processes your question through the Sovereign Risk Engine — integrating live market data, real estate indices, and macro signals to deliver structured financial analysis in seconds.</p>
+  <ul class="demo-list">
+    <li>Type your investment question in any language</li>
+    <li>Engine correlates 8+ live market signals</li>
+    <li>Receives quantitative analysis with real numbers</li>
+    <li>Gets a clear BUY / HOLD / HEDGE / AVOID signal</li>
+    <li>Stress-tested against Black Swan scenarios</li>
+  </ul>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- MARKETS -->
+
+<section class="markets-section" id="markets">
+  <div class="section-header reveal">
+    <div class="section-tag">Live Coverage</div>
+    <h2 class="section-title">MARKETS WE <em>monitor</em></h2>
+  </div>
+
+  <div class="markets-grid reveal">
+    <div class="market-card">
+      <div class="market-cat">Currency</div>
+      <div class="market-name">USD / MAD</div>
+      <div class="market-val">10.04</div>
+      <div class="market-chg up">▲ +0.12%</div>
+    </div>
+    <div class="market-card">
+      <div class="market-cat">Currency</div>
+      <div class="market-name">EUR / MAD</div>
+      <div class="market-val">11.21</div>
+      <div class="market-chg dn">▼ -0.08%</div>
+    </div>
+    <div class="market-card">
+      <div class="market-cat">Crypto</div>
+      <div class="market-name">Bitcoin</div>
+      <div class="market-val">$94,210</div>
+      <div class="market-chg up">▲ +2.3%</div>
+    </div>
+    <div class="market-card">
+      <div class="market-cat">Index</div>
+      <div class="market-name">MASI (CSE)</div>
+      <div class="market-val">13,842</div>
+      <div class="market-chg up">▲ +0.44%</div>
+    </div>
+    <div class="market-card">
+      <div class="market-cat">Rate</div>
+      <div class="market-name">BAM Rate</div>
+      <div class="market-val">2.75%</div>
+      <div class="market-chg" style="color:var(--muted)">● STABLE</div>
+    </div>
+    <div class="market-card">
+      <div class="market-cat">Commodity</div>
+      <div class="market-name">Gold</div>
+      <div class="market-val">$2,318</div>
+      <div class="market-chg up">▲ +0.5%</div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- QUOTE -->
+
+<section class="quote-section reveal">
+  <div class="quote-mark">"</div>
+  <p class="quote-text">
+    Built from a smartphone, with no funding, no laptop, no institutional support —
+    because the best financial intelligence shouldn't require a Bloomberg terminal.
+  </p>
+  <div class="quote-author">Omar Saadaoui · Founder, Empire OS · Casablanca, Morocco</div>
+</section>
+
+<!-- CTA -->
+
+<section class="cta-section">
+  <h2 class="cta-title reveal">
+    YOUR WEALTH.
+    <span>YOUR EMPIRE.</span>
+  </h2>
+  <p class="cta-sub reveal">Start analyzing in 30 seconds. No signup required.</p>
+  <div class="cta-actions reveal">
+    <a href="https://claude.ai/public/artifacts/60802aeb-ec05-4869-9890-474bfe993e66" target="_blank" class="btn-primary">
+      <span>Launch Empire OS →</span>
+    </a>
+    <a href="mailto:omarsaoud@empire-os.com" class="btn-secondary">Request Demo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<div class="gold-line"></div>
+<footer>
+  <div class="footer-logo">EMPIRE OS</div>
+  <ul class="footer-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="https://claude.ai/public/artifacts/60802aeb-ec05-4869-9890-474bfe993e66" target="_blank">Launch App</a></li>
+  </ul>
+  <div class="footer-text">© 2026 Omar Saadaoui · Empire OS · All rights reserved</div>
+</footer>
+
+<script>
+// CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx - 4 + 'px';
+  cursor.style.top = my - 4 + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx - 16 + 'px';
+  ring.style.top = ry - 16 + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'scale(3)';
+    ring.style.transform = 'scale(1.5)';
+    ring.style.borderColor = 'rgba(201,168,76,0.8)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'scale(1)';
+    ring.style.transform = 'scale(1)';
+    ring.style.borderColor = 'rgba(201,168,76,0.4)';
+  });
+});
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 100);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
